@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
   name: "Telegraph",
   platforms: [
-    .iOS(.v9),
+    .iOS(.v13),
     .tvOS(.v9),
     .macOS(.v10_10),
   ],
@@ -17,7 +17,7 @@ let package = Package(
   ],
   dependencies: [
     .package(url: "https://github.com/robbiehanson/CocoaAsyncSocket.git", from: "7.6.5"),
-    .package(url: "..//HTTPParserC", from: "9.2.0"),
+    .package(path: "../HTTPParserC"),
   ],
   targets: [
     .target(
