@@ -16,10 +16,10 @@ open class HTTPWebSocketHandler: HTTPRequestHandler {
     self.protocolName = protocolName
   }
 
-  open func respond(to request: HTTPRequest, nextHandler: HTTPRequest.Handler) throws -> HTTPResponse? {
+  open func respond(to request: HTTPRequest, nextHandler: HTTPRequest.Handler) async throws -> HTTPResponse? {
     // Skip if this isn't a websocket upgrade request
     guard request.isWebSocketUpgrade else {
-      return try nextHandler(request)
+      return try await nextHandler(request)
     }
 
     // Validate the handshake

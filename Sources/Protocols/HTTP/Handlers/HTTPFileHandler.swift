@@ -24,10 +24,10 @@ open class HTTPFileHandler: HTTPRequestHandler {
   }
 
   /// Creates a response to the provided request or passes it to the next handler.
-  open func respond(to request: HTTPRequest, nextHandler: HTTPRequest.Handler) throws -> HTTPResponse? {
+  open func respond(to request: HTTPRequest, nextHandler: HTTPRequest.Handler) async throws -> HTTPResponse? {
     // Only respond to GET requests targetted at our path
     guard request.method == .GET, let relativePath = request.uri.relativePath(from: baseURI.path) else {
-      return try nextHandler(request)
+      return try await nextHandler(request)
     }
 
     // Construct the full resource URL

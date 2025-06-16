@@ -10,7 +10,9 @@ open class HTTPRouteHandler: HTTPRequestHandler {
   public var routes = [HTTPRoute]()
   public var implicitHeadRequests = true
 
-  open func respond(to request: HTTPRequest, nextHandler: HTTPRequest.Handler) throws -> HTTPResponse? {
+  open func respond(to request: HTTPRequest, nextHandler: HTTPRequest.Handler) async throws
+    -> HTTPResponse?
+  {
     var matchingRoute: HTTPRoute?
 
     // Do we want to allow HEAD requests on GET routes?
@@ -38,7 +40,7 @@ open class HTTPRouteHandler: HTTPRequestHandler {
 
     // If we found a route then call its handler
     if let route = matchingRoute {
-      return try route.handler(request)
+      return try await route.handler(request)
     }
 
     // Otherwise return 404 not found

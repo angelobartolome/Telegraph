@@ -30,6 +30,7 @@ public struct HTTPRoute {
     let pattern = try HTTPRoute.routePattern(basedOn: uri)
     try self.init(methods: methods, regex: pattern, handler: handler)
   }
+
 }
 
 // MARK: Route pattern processing
