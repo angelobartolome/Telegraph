@@ -70,18 +70,22 @@ open class Server {
       guard let self = self, let connection = connection else { return }
 
         if #available(iOS 13.0, *) {
-            Task {
-                // Get a response for the request
-                let response = await self.responseFor(request: request, error: error)
-                
-                // Send the response or close the connection
-                self.connectionsQueue.async {
-                    if let response = response {
-                        connection.send(response: response, toRequest: request)
-                    } else {
-                        connection.close(immediately: true)
+            if #available(macOS 10.15, *) {
+                Task {
+                    // Get a response for the request
+                    let response = await self.responseFor(request: request, error: error)
+                    
+                    // Send the response or close the connection
+                    self.connectionsQueue.async {
+                        if let response = response {
+                            connection.send(response: response, toRequest: request)
+                        } else {
+                            connection.close(immediately: true)
+                        }
                     }
                 }
+            } else {
+                // Fallback on earlier versions
             }
         } else {
             // Fallback on earlier versions
